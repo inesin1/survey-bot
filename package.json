@@ -1,0 +1,33 @@
+{
+  "name": "nutri-bot-new",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "start": "ts-node src/index.js",
+    "build-ts": "tsc --skipLibCheck",
+    "distribute": "yarn build-ts && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grammyjs/conversations": "^1.2.0",
+    "@grammyjs/menu": "^1.2.1",
+    "@types/async": "^3.2.24",
+    "async": "^3.2.5",
+    "grammy": "^1.22.4",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.12.7",
+    "@types/node-fetch": "2",
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
