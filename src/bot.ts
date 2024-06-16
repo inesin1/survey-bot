@@ -13,7 +13,7 @@ export const useBot = (apiKey: string) => {
     getWelcomeMessage,
     getAdminId,
     getByeMessage,
-    getQuestion, 
+    getQuestion,
     addQuestion,
     editQuestion,
     editByeMessage,
@@ -52,10 +52,10 @@ export const useBot = (apiKey: string) => {
     })
 
     bot.command('admin', (ctx: MyContext) => {
-      // if (ctx.from?.id !== getAdminId()) {
-      //   ctx.reply('Вы не админ')
-      //   return
-      // }
+      if (ctx.from?.id !== getAdminId()) {
+        ctx.reply('Вы не админ')
+        return
+      }
 
       ctx.reply('Админ меню', { reply_markup: adminMenu })
     })
@@ -68,6 +68,8 @@ export const useBot = (apiKey: string) => {
 
   async function askQuestions(conversation: MyConversation, ctx: MyContext) {
     const isSuccess = await askQuestion(0, conversation, ctx)
+    console.log('Вышел', isSuccess)
+
     if (isSuccess) {
       ctx.reply(getByeMessage())
       sendAnswers()
@@ -78,9 +80,13 @@ export const useBot = (apiKey: string) => {
     id: number,
     conversation: MyConversation,
     ctx: MyContext
-  ) => {
+  ): Promise<boolean> => {
     const question = getQuestion(id)
-    if (!question) return true
+
+    if (!question) {
+      console.log('no question')
+      return true
+    }
 
     await ctx.reply(question)
 
@@ -90,7 +96,7 @@ export const useBot = (apiKey: string) => {
 
     answers[question] = newCtx.message!.text!
 
-    await askQuestion(id + 1, conversation, newCtx)
+    return await askQuestion(id + 1, conversation, newCtx)
   }
 
   const sendAnswers = () => {
