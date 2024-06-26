@@ -52,7 +52,7 @@ export const useBot = (apiKey: string) => {
     })
 
     bot.command('admin', (ctx: MyContext) => {
-      if (ctx.from?.id !== getAdminId()) {
+      if (!getAdminId().includes(ctx.from?.id!)) {
         ctx.reply('Вы не админ')
         return
       }
@@ -106,7 +106,10 @@ export const useBot = (apiKey: string) => {
       .join('\n')
       .value()
 
-    bot.api.sendMessage(getAdminId(), `Новый клиент! \n\n${formattedAnswers}`)
+    const adminIds = getAdminId()
+    adminIds.forEach((adminId) => {
+      bot.api.sendMessage(adminId, `Новый клиент! \n\n${formattedAnswers}`)
+    })
   }
 
   // Setup

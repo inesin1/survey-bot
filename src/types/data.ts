@@ -1,5 +1,5 @@
 export interface Data {
-  admin_id: number
+  admin_id: number[]
   welcome_message: string
   bye_message: string
   ghost_messages: boolean
